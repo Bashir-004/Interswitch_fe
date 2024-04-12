@@ -59,6 +59,7 @@ const ItemList = () => {
 
   return (
     <div className="flex">
+    <div className="flex">
       {/* Sidebar */}
       <section className="left-panel">
         <aside className="relative bg-sidebar bg-black h-screen w-64 hidden sm:block shadow-xl">
@@ -114,64 +115,7 @@ const ItemList = () => {
           </nav>
         </aside>
       </section>
-
-      {/* Main content */}
-      <div className="flex-1 my-32">
-        {/* Table */}
-        <div className=" flex justify-center">
-          <table className="w-full text-sm text-left border text-gray-500 dark:text-gray-400">
-            <thead className="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr className="capitalize">
-                <th scope="col" className="p-2 px-4">
-                  {/* Checkbox header */}
-                </th>
-                <th scope="col" className="py-2 px-6 inline-flex items-center">
-                  Name of items
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Category of items
-                </th>
-                <th scope="col" className="py-3 px-6">
-                  Reasons for Blacklisting
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {dummyItems.map((item) => (
-                <tr key={item.id} className="bg-white border-b dark:bg-gray-500 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  {/* Table row content */}
-                  <td className="p-2 px-4">
-                    <input
-                      type="checkbox"
-                      onChange={() => handleCheckboxChange(item.id)}
-                      checked={selectedItems.includes(item.id)}
-                    />
-                  </td>
-                  <td className="py-2 px-6">{item.name}</td>
-                  <td className="py-3 px-6">{item.category}</td>
-                  <td className="py-3 px-6">
-                    <input
-                      type="text"
-                      value={reasons[item.id] || ''}
-                      onChange={(e) => handleReasonChange(item.id, e.target.value)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Submit Button */}
-        <div className="flex justify-center mt-6">
-          <button
-            onClick={handleBlacklistSubmit}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded"
-          >
-            Submit
-          </button>
-        </div>
-      </div>
+</div>
     </div>
   );
 };
