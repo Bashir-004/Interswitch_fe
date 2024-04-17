@@ -35,22 +35,23 @@ const CreateBlacklist = () => {
           alert(data.message);
         }
         else {
-          setError(data.message)
+          setError(data.error)
         }
       } catch (error) {
         console.error('Error blacklisting item:', error);
-        setError(error.message);
+        // setError(error.message);
         // Display error message to the user
       }
     };
   
   return (
-    <>
     <div className="container md:flex">
-    <section className="left-panel">
-        <aside className="relative bg-sidebar bg-black h-full w-64 hidden sm:block shadow-xl" x-show="isOpen()">
+      <section className="left-panel">
+        <aside className="relative bg-sidebar bg-black h-full min-h-screen w-64 hidden sm:block shadow-xl" x-show="isOpen()">
           <div className="p-6 inline-flex">
-            <a href="#" className="text-white text-3xl font-semibold uppercase hover:text-gray-300"><img src="http://www.interswitchgroup.com/assets/images/home/interswitch_logo.svg" style={{ width: '150px' }} alt="interswitch Logo" /></a>
+            <a href="#" className="text-white text-3xl font-semibold uppercase hover:text-gray-300">
+              <img src="http://www.interswitchgroup.com/assets/images/home/interswitch_logo.svg" style={{ width: '150px' }} alt="interswitch Logo" />
+            </a>
             <a
               className="ml-auto  flex-1 flex items-center"
               href="#"
@@ -99,7 +100,7 @@ const CreateBlacklist = () => {
           </nav>
         </aside>
       </section>
-       <div class="w-full my-[32%] justify-center flex-col flex-wrap md:ml-96 mt-52 block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
+          <div class="w-full my-[32%] justify-center flex-col flex-wrap md:ml-44 mt-44 block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
        {error && <div className="text-red-500 text-sm mt-3">Error: {error}</div>}
        <form onSubmit={handleBlacklistSubmit} className="max-w-sm mx-auto">
             <div className="text-2xl text-center">
@@ -111,11 +112,6 @@ const CreateBlacklist = () => {
               <input type="text" id="itemName" name="item" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Name of item" required />
             </div>
             
-            {/* <div className="mb-5">
-              <label htmlFor="itemCategory" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category of Item</label>
-              <input type="text" id="itemCategory" name="category" className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Category of Item" required />
-            </div>
-         */}
             <div className="mb-5">
               <label htmlFor="reason" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Reason</label>
               <textarea id="reason" name="reasons" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Reason" required></textarea>
@@ -129,83 +125,7 @@ const CreateBlacklist = () => {
           </form>
           </div>
     </div>
-</>
   )
 };
 
 export default CreateBlacklist;
-
-
-
-
-//   const { authTokens, user } = useContext(AuthContext);
-    
-
-  //   const handleBlacklistSubmit = async (e) => {
-  //     e.preventDefault();
-  
-  //     const itemName = e.target.item.value;
-  //     const category = e.target.category.value;
-  //     const reasons = e.target.reasons.value;
-  
-  //     try {
-  //         // Fetch the list of items
-  //         const listItemsResponse = await fetch('https://safegate-backend-a63df812f989.herokuapp.com/blacklist/add', {
-  //             method: 'GET',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 Authorization: `Bearer ${authTokens}`,
-  //             },
-  //         });
-  
-  //         if (!listItemsResponse.ok) {
-  //             throw new Error('Failed to fetch list of items');
-  //         }
-  
-  //         const listItems = await listItemsResponse.json();
-  //         const itemIndex = listItems.findIndex(item => item.name === itemName && item.category === category);
-  
-  //         if (itemIndex === -1) {
-  //             throw new Error('Item not found in the list');
-  //         }
-  
-  //         // Delete the item from the list
-  //         const updatedListItems = [...listItems.slice(0, itemIndex), ...listItems.slice(itemIndex + 1)];
-  
-  //         // Post the updated list of items back to the database (this is just a placeholder, you need to implement the actual logic)
-  //         const updateListItemsResponse = await fetch('/api/items', {
-  //             method: 'PUT', // Use PUT method to update the list of items
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 Authorization: `Bearer ${authTokens}`,
-  //             },
-  //             body: JSON.stringify(updatedListItems),
-  //         });
-  
-  //         if (!updateListItemsResponse.ok) {
-  //             throw new Error('Failed to update list of items');
-  //         }
-  
-  //         // Post the new form value to the blacklist database
-  //         const response = await fetch('/api/blacklist', {
-  //             method: 'POST',
-  //             headers: {
-  //                 'Content-Type': 'application/json',
-  //                 Authorization: `Bearer ${authTokens.access}`,
-  //             },
-  //             body: JSON.stringify({ itemValue, category, reasons }),
-  //         });
-  
-  //         if (!response.ok) {
-  //             throw new Error('Failed to blacklist item');
-  //         }
-  
-         
-  //     } catch (error) {
-  //         console.error('Error blacklisting item:', error);
-  //         setError(error.message);
-  //         // Display error message to the user
-  //     }
-  // };
-  // //const isPermitted = user.isAdmin || user.isBlacklisted
-  // const isPermitted = true;

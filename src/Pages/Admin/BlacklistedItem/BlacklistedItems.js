@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react';
 import AuthContext from '../../../Context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const BlacklistedItems = () => {
-  const [blacklist, setBlacklist] = useState([]);
+  const [items, setItems] = useState([]);
   const [reasons, setReasons] = useState([]);
   const { authTokens, user } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchBlacklistedItems = async () => {
@@ -15,12 +17,19 @@ const BlacklistedItems = () => {
         const response = await fetch('https://safegate-backend-a63df812f989.herokuapp.com/blacklist', {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${authTokens}`, // Assuming authTokens contains the accessToken
+            'Authorization': `Bearer ${authTokens}`, 
             'Content-Type': 'application/json'
           },
         });
         const data = await response.json();
-        setItems(data);
+        console.log(data)
+        if (data.status === 0) {
+          const { content } = data.data;
+          setItems(content);
+        } else {
+          setError(data.message);
+        }
+        console.log(data)
         setLoading(false);
       } catch (error) {
         setError(error.message);
@@ -32,17 +41,21 @@ const BlacklistedItems = () => {
 
   const handleRemoveFromBlacklist = async (itemId, index) => {
     try {
-      const response = await fetch(`https://safegate-backend-a63df812f989.herokuapp.com/blacklist/remove`, {
+      const itemName = items[index].item;
+      const response = await fetch('https://safegate-backend-a63df812f989.herokuapp.com/blacklist/remove', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authTokens}`,
         },
-        body: JSON.stringify({ reason: reasons[index] }), // Send reason for removal
+        body: JSON.stringify({ itemName, reason: reasons[index] }),
       });
-
+      const data = await response.json()
+      console.log(data)
       if (response.ok) {
-        setBlacklist((prevBlacklist) => prevBlacklist.filter((item) => item.id !== itemId));
+        setItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+        alert(data.message);
+        navigate('/admin');
       } else {
         console.error('Failed to remove item from blacklist:', response.statusText);
       }
@@ -50,7 +63,7 @@ const BlacklistedItems = () => {
       console.error('Error removing item from blacklist:', error);
     }
   };
-
+  
   const handleReasonChange = (e, index) => {
     const newReasons = [...reasons];
     newReasons[index] = e.target.value;
@@ -144,16 +157,16 @@ const BlacklistedItems = () => {
       </tr>
   </thead>
   <tbody>
-            {blacklist.map((item, index) => (
-              <tr key={item.id} className="bg-white border-b dark:bg-gray-500 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600">
+            {items.map((item, index) => (
+              <tr key={item.itemId} className="bg-white border-b dark:bg-gray-500 dark:border-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td className="p-4 w-4">
                   {/* Checkbox input */}
                 </td>
                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.name}
+                  {item.item}
                 </td>
                 <td className="py-4 px-6">
-                  {/* Category display */}
+                  {item.category} 
                 </td>
                 <td className="py-4 px-6 text-gray-900">
                   {item.reason}

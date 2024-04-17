@@ -54,10 +54,10 @@ export const AuthProvider = ({ children }) => {
         setError(errorMessage);
         // console.log(errorMessage)
       }
-      else {
-        setError(errorMessage);
-        // console.log(errorMessage)
-      }
+      // else {
+      //   setError(errorMessage);
+      //   // console.log(errorMessage)
+      // }
     } catch (error) {
       console.error('Error during login:', error);
       // setError('An error occurred during login. You might need to input your details correctly and try again.');
@@ -65,7 +65,8 @@ export const AuthProvider = ({ children }) => {
   };
 
 
-  const logoutUser = () => {
+  const logoutUser = (e) => {
+    e.preventDefault()
     setAuthTokens(null);
     setUser(null);
     localStorage.removeItem('authTokens');
@@ -95,10 +96,14 @@ export const AuthProvider = ({ children }) => {
   //     }
   // }
 
+  const isAuthenticated = !!authTokens;
+
   const contextData = {
+    
     user: user,
     error : error,
     authTokens: authTokens,
+    isAuthenticated: isAuthenticated,
     loginUser: loginUser,
     logoutUser: logoutUser,
   };

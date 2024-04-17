@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import React, { useEffect, useState } from 'react';
 import './App.css';
 import LoginPage from './Pages/Login/LoginPage';  
-// import SignUpHeader from './components/SignUpHeader'; 
+
 import Footer from './Components/Footer/Footer'
 import Header from './Components/Header/Header'
 import { AuthProvider } from './Context/AuthContext'
@@ -11,7 +11,7 @@ import AdminDashboard from "./Pages/Admin/Dashboard/AdminDashboard";
 import ListItems from "./Pages/ListItems/ListItems";
 import CreateBlacklist from "./Pages/Admin/CreateBlacklist/CreateBlacklist";
 import AddNewUser from "./Pages/Admin/Signup/AddNewUser";
-import SignUpPage from "./Pages/Admin/Signup/SignUpPage";
+import SignUpPage from "./Pages/Admin/Signup/SignupPage";
 import BlacklistedItems from "./Pages/Admin/BlacklistedItem/BlacklistedItems";
 
 

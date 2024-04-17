@@ -40,13 +40,16 @@ const AddNewUser = () => {
         alert(data.message)
         navigate('/admin');
       } else {
-        alert('This email has already been used!')
+        // alert('This email has already been used!')
         // console.log(data)
-        // setError(data.error); // Assuming backend returns an error message
+        setError(data.error); //backend response
+        setError(data.message); //backend response
+        setError(data.error); //backend response
+        setError(data.message); //backend response
       }
     } catch (error) {
       console.error('Error during registration:', error);
-      setError('An error occurred during registration');
+      // setError('An error occured during registration');
     }
   };
 
@@ -61,9 +64,9 @@ const AddNewUser = () => {
   // }
 
   return (
-   <div className="container md:flex">
+    <div className="container md:flex">
     <section className="left-panel">
-        <aside className="relative bg-sidebar bg-black h-full w-64 hidden sm:block shadow-xl" x-show="isOpen()">
+    <aside className="relative bg-sidebar bg-black h-full min-h-screen w-64 hidden sm:block shadow-xl" x-show="isOpen()">
           <div className="p-6 inline-flex">
             <a href="#" className="text-white text-3xl font-semibold uppercase hover:text-gray-300"><img src="http://www.interswitchgroup.com/assets/images/home/interswitch_logo.svg" style={{ width: '150px' }} alt="interswitch Logo" /></a>
             <a
@@ -115,50 +118,56 @@ const AddNewUser = () => {
         </aside>
       </section>
   
-        <div class="w-full my-[32%] justify-center flex-col flex-wrap md:ml-96 mt-52 block max-w-md rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-            <div class="text-2xl text-center"> 
-            <img
-      src="http://www.interswitchgroup.com/assets/images/home/interswitch_logo.svg"
-              width="130"
-              className="mb-4"
-              alt="Interswitch Logo"
-              />
-                <div class="">
-                    <h1 class="mb-8 text-2xl text-center">Add New User</h1>
-                    <input 
-                        type="text"
-                        class="block border border-grey-light w-full p-3 rounded mb-4"
-                        name="email"
-                        placeholder="Email" />
-
-<label htmlFor="role"></label>
+      
+      <div className="w-full flex justify-center items-center">
+      <div className="max-w-md">
+        <img
+          src="http://www.interswitchgroup.com/assets/images/home/interswitch_logo.svg"
+          width="130"
+          className="mx-auto mb-4"
+          alt="Interswitch Logo"
+        />
+        <div className="bg-white px-6 py-8 rounded shadow-md text-black">
+          <h1 className="mb-8 text-2xl text-center">Add New User</h1>
+          {error && <div className="text-red-500 text-sm mt-3">Error: {error}</div>}
+          <input 
+            type="text"
+            className="block border border-grey-light w-full p-3 rounded mb-4"
+            name="email"
+            placeholder="Email" 
+            onChange={handleFormChange}
+          />
+          
+          {/* Dropdown menu for selecting role */}
+          <label htmlFor="role">Role</label>
           <select
             name="role"
             id="role"
             className="block border border-grey-light w-full p-3 rounded mb-4"
             onChange={handleFormChange}
           >
-            <option value="" placeholder="Select Role">Select Role</option>
+            <option value="">Select Role</option>
             {roles.map((role, index) => (
               <option key={index} value={role}>{role}</option>
             ))}
           </select>
 
-                    <button
-                        type="submit"
-                        class="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-blue-600 focus:outline-none my-4"
-                    >
-                        Create Account
-                    </button>
+          <button
+            type="submit"
+            className="w-full text-center py-3 rounded bg-blue-400 text-white hover:bg-blue-600 focus:outline-none my-4"
+            onClick={handleSubmit}
+          >
+            Create Account
+          </button>
 
-                    <div class="text-center text-sm text-grey-dark mt-4">
-                        By signing up, you agree to the <br /> 
-                        <a class="no-underline border-b border-grey-dark text-grey-dark" href="#">
-                            Terms of Service
-                        </a> and <br />
-                        <a class="no-underline border-b border-grey-dark text-grey-dark" href="#">
-                            Privacy Policy
-                        </a>
+          <div className="text-center text-sm text-grey-dark mt-4">
+            By signing up, you agree to the <br /> 
+            <a className="no-underline border-b border-grey-dark text-grey-dark" href="#">
+              Terms of Service
+            </a> and <br />
+            <a className="no-underline border-b border-grey-dark text-grey-dark" href="#">
+              Privacy Policy
+            </a>
                     </div>
                 </div>
             </div>
