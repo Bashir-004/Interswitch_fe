@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import AuthContext from '../../Context/AuthContext';
+import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const { loginUser, error } = useContext(AuthContext);
@@ -53,6 +54,11 @@ const LoginPage = () => {
                 >
                   Sign in
                 </button>
+                <div className="signup-container text-center text-sm text-grey-dark mt-4">
+                <p>
+              Don't have an account? <Link to="/signup" className="text-blue-400 hover:text-blue-600">Sign Up</Link>
+            </p>
+            </div>
               </form>
             </div>
           </div>

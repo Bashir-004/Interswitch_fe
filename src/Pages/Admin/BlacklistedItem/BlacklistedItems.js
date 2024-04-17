@@ -48,7 +48,7 @@ const BlacklistedItems = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${authTokens}`,
         },
-        body: JSON.stringify({ itemName, reason: reasons[index] }), // Include both itemName and reason
+        body: JSON.stringify({ itemName, reason: reasons[index] }),
       });
       const data = await response.json()
       console.log(data)
